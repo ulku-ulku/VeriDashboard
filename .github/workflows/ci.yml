@@ -1,0 +1,79 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: ecommerce_analytics
+          POSTGRES_USER: analytics_user
+          POSTGRES_PASSWORD: analytics_pass
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python kurulumu
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Bağımlılıkları yükle
+        run: pip install -r requirements.txt
+
+      - name: Veri üret
+        run: python -m src.data_generation.generate_data
+
+      - name: Unit testler
+        run: pytest tests/ -v --cov=src --cov-report=xml --cov-report=term-missing
+
+      - name: Veri kalitesi kontrolü
+        run: python -c "
+        import pandas as pd
+        from src.data_quality.quality_checks import run_all_quality_checks
+        from src.config import PROCESSED_DATA_DIR
+        for table in ['customers','products','orders','order_items','payments','website_events']:
+            df = pd.read_csv(PROCESSED_DATA_DIR / f'{table}.csv')
+            report = run_all_quality_checks(df, table)
+            assert report.total_rows > 0, f'{table} boş'
+        print('Veri kalitesi kontrolleri geçti')
+        "
+
+      - name: Churn model eğitimi
+        run: python -m src.ml.churn_prediction
+
+      - name: Gelir tahmini
+        run: python -m src.forecasting.revenue_forecast
+
+      - name: Coverage raporu yükle
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install ruff
+      - run: ruff check src/ dashboard/ tests/ --ignore E501

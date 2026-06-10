@@ -1,0 +1,122 @@
+{
+  "random_forest": {
+    "accuracy": 0.6581,
+    "roc_auc": 0.6563,
+    "classification_report": {
+      "0": {
+        "precision": 0.45240641711229945,
+        "recall": 0.5451030927835051,
+        "f1-score": 0.494447691408533,
+        "support": 776.0
+      },
+      "1": {
+        "precision": 0.7786833855799373,
+        "recall": 0.7080957810718358,
+        "f1-score": 0.7417139444610331,
+        "support": 1754.0
+      },
+      "accuracy": 0.658102766798419,
+      "macro avg": {
+        "precision": 0.6155449013461184,
+        "recall": 0.6265994369276704,
+        "f1-score": 0.6180808179347831,
+        "support": 2530.0
+      },
+      "weighted avg": {
+        "precision": 0.6786079201527093,
+        "recall": 0.658102766798419,
+        "f1-score": 0.6658725956986852,
+        "support": 2530.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        423,
+        353
+      ],
+      [
+        512,
+        1242
+      ]
+    ],
+    "feature_importance": {
+      "customer_segment_Sadık": 0.10265529493939841,
+      "total_spent": 0.08889094540272387,
+      "avg_order_value": 0.0885263925243966,
+      "days_since_last_order": 0.08515181618487393,
+      "days_since_first_order": 0.0788286322681078,
+      "total_discount": 0.0723439201724833,
+      "total_items": 0.06895199036565706,
+      "age": 0.06735126728964409,
+      "customer_segment_VIP": 0.06495090820518172,
+      "avg_items_per_order": 0.061258233933892965,
+      "total_orders": 0.055887917290536576,
+      "customer_segment_Yeni": 0.03670559215447381,
+      "orders_with_discount": 0.03175850788930394,
+      "channel_diversity": 0.02204035514649731,
+      "customer_segment_Risk": 0.012336840032262698
+    },
+    "cv_roc_auc_mean": 0.6416,
+    "cv_roc_auc_std": 0.0055
+  },
+  "xgboost": {
+    "accuracy": 0.6854,
+    "roc_auc": 0.6384,
+    "classification_report": {
+      "0": {
+        "precision": 0.45495495495495497,
+        "recall": 0.13015463917525774,
+        "f1-score": 0.20240480961923848,
+        "support": 776.0
+      },
+      "1": {
+        "precision": 0.7075389948006933,
+        "recall": 0.9310148232611174,
+        "f1-score": 0.8040374199901527,
+        "support": 1754.0
+      },
+      "accuracy": 0.6853754940711463,
+      "macro avg": {
+        "precision": 0.5812469748778242,
+        "recall": 0.5305847312181876,
+        "f1-score": 0.5032211148046956,
+        "support": 2530.0
+      },
+      "weighted avg": {
+        "precision": 0.6300665778361506,
+        "recall": 0.6853754940711463,
+        "f1-score": 0.6195050462163071,
+        "support": 2530.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        101,
+        675
+      ],
+      [
+        121,
+        1633
+      ]
+    ],
+    "feature_importance": {
+      "customer_segment_VIP": 0.34214991331100464,
+      "customer_segment_Sadık": 0.2311410903930664,
+      "customer_segment_Yeni": 0.03543190285563469,
+      "customer_segment_Risk": 0.03323261812329292,
+      "avg_order_value": 0.022499211132526398,
+      "registration_channel_social_media": 0.022253891453146935,
+      "total_spent": 0.021939612925052643,
+      "total_discount": 0.021001756191253662,
+      "orders_with_discount": 0.020569130778312683,
+      "age": 0.020549440756440163,
+      "days_since_last_order": 0.020496070384979248,
+      "days_since_first_order": 0.020391814410686493,
+      "total_orders": 0.02013411931693554,
+      "channel_diversity": 0.019985860213637352,
+      "registration_channel_referral": 0.019699692726135254
+    },
+    "cv_roc_auc_mean": 0.6272,
+    "cv_roc_auc_std": 0.0056
+  }
+}
