@@ -297,4 +297,5 @@ Pull request'ler memnuniyetle karşılanır. Büyük değişiklikler için önce
 #   V e r i D a s h b o a r d  
  #   V e r i D a s h b o a r d 1  
  #   V e r i D a s h b o a r d  
+ #   V e r i D a s h b o a r d  
  
